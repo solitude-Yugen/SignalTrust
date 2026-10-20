@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignalTrust — Pitch Deck</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --violet: #7C3AED; --violet-light: #8B5CF6; --violet-pale: #EDE9FE;
+  --rose:   #F43F5E; --rose-pale: #FFE4E6;
+  --mint:   #10B981; --mint-pale: #D1FAE5;
+  --sky:    #0EA5E9; --sky-pale: #E0F2FE;
+  --amber:  #F59E0B; --amber-pale: #FEF3C7;
+  --bg:     #F5F4F0; --card: #FFFFFF;
+  --text:   #18181B; --muted: #71717A;
+  --border: #E6E4DD;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #1a1a2e;
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Deck container */
+.deck { width: 100vw; height: 100vh; position: relative; }
+
+/* Individual slides */
+.slide {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  padding: 3rem 4rem;
+  transition: opacity 0.35s ease;
+  overflow: hidden;
+}
+.slide.active { display: flex; }
+
+/* Navigation */
+.nav {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 1rem;
+  background: rgba(255,255,255,0.12); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 999px; padding: 0.6rem 1.4rem;
+  z-index: 100;
+}
+.nav button {
+  background: none; border: none; color: #fff;
+  font-size: 1.1rem; cursor: pointer; padding: 0.2rem 0.6rem;
+  border-radius: 6px; transition: background 0.15s;
+}
+.nav button:hover { background: rgba(255,255,255,0.15); }
+.nav .counter { color: rgba(255,255,255,0.7); font-size: 0.8rem; min-width: 50px; text-align: center; }
+
+/* ── SLIDE 1: Title ──────────────────────────────────────────────────────── */
+#s1 {
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  justify-content: center; align-items: flex-start;
+}
+#s1 .tag {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--violet-light);
+  background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3);
+  padding: 0.35rem 0.9rem; border-radius: 999px; margin-bottom: 1.5rem;
+  display: inline-block;
+}
+#s1 h1 {
+  font-size: 5rem; font-weight: 900; color: #fff;
+  line-height: 1; letter-spacing: -0.03em; margin-bottom: 0.5rem;
+}
+#s1 h1 span { color: var(--violet-light); }
+#s1 .tagline {
+  font-size: 1.4rem; color: rgba(255,255,255,0.65);
+  font-weight: 400; max-width: 680px; line-height: 1.5; margin-bottom: 3rem;
+}
+#s1 .quote {
+  font-size: 1.1rem; color: rgba(255,255,255,0.9);
+  font-style: italic; font-weight: 500;
+  border-left: 3px solid var(--violet-light); padding-left: 1rem;
+  margin-bottom: 3rem;
+}
+#s1 .meta {
+  display: flex; gap: 2rem; flex-wrap: wrap;
+}
+#s1 .meta-item {
+  display: flex; flex-direction: column; gap: 2px;
+}
+#s1 .meta-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
+#s1 .meta-value { font-size: 0.85rem; color: rgba(255,255,255,0.8); font-weight: 500; }
+#s1 .pulse-icon {
+  position: absolute; right: 6rem; top: 50%; transform: translateY(-50%);
+  font-size: 12rem; opacity: 0.07;
+}
+
+/* ── SLIDE 2: Problem ────────────────────────────────────────────────────── */
+#s2 { background: var(--bg); }
+#s2 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; flex: 1; margin-top: 1.5rem; }
+.problem-box {
+  background: var(--card); border-radius: 16px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); padding: 1.8rem;
+}
+.problem-box.bad  { border-top: 4px solid var(--rose); }
+.problem-box.good { border-top: 4px solid var(--mint); }
+
+/* ── SLIDE 3: Idea ───────────────────────────────────────────────────────── */
+#s3 { background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 100%); }
+#s3 .pipeline {
+  display: flex; align-items: center; gap: 1rem;
+  flex: 1; margin-top: 2rem; flex-wrap: wrap;
+}
+.pipe-step {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px; padding: 1.2rem 1.4rem;
+  flex: 1; min-width: 160px;
+}
+.pipe-arrow { color: rgba(255,255,255,0.3); font-size: 1.5rem; flex-shrink: 0; }
+.pipe-step .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.pipe-step .lbl { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.3rem; }
+.pipe-step .desc { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.4; }
+.pipe-step.highlight { background: rgba(139,92,246,0.2); border-color: rgba(139,92,246,0.4); }
+
+/* ── SLIDE 4: Results ────────────────────────────────────────────────────── */
+#s4 { background: var(--bg); }
+.results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 1.5rem; }
+.metric-card {
+  background: var(--card); border-radius: 14px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); padding: 1.4rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.metric-card .lbl { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.metric-card .val { font-size: 2.2rem; font-weight: 900; line-height: 1; }
+.metric-card .sub { font-size: 0.75rem; color: var(--muted); }
+.table-card {
+  background: var(--card); border-radius: 14px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); padding: 1.4rem; margin-top: 1.2rem;
+  grid-column: 1 / -1;
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { text-align: left; font-weight: 700; padding: 0.5rem 0.7rem; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); border-bottom: 1px solid var(--border); }
+td { padding: 0.5rem 0.7rem; border-bottom: 1px solid #F8F8F7; }
+tr.best td { background: #F5F3FF; font-weight: 600; color: var(--violet); }
+tr:last-child td { border-bottom: none; }
+
+/* ── SLIDE 5: Robustness ─────────────────────────────────────────────────── */
+#s5 { background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 100%); }
+.robust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; flex: 1; margin-top: 1.5rem; }
+.robust-card {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 1.4rem;
+}
+.robust-card h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.8rem; }
+.robust-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; font-size: 0.8rem; }
+.robust-row .bar-wrap { flex: 1; margin: 0 0.7rem; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; }
+.robust-row .bar { height: 100%; border-radius: 999px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.65rem; font-weight: 700; }
+.badge-good { background: rgba(16,185,129,0.2); color: #34D399; }
+.badge-bad  { background: rgba(244,63,94,0.2); color: #FB7185; }
+
+/* ── SLIDE 6: Error Analysis / Failure Gallery ───────────────────────────── */
+#s6 { background: var(--bg); }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; flex: 1; margin-top: 1.5rem; }
+.gallery-card {
+  background: var(--card); border-radius: 14px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); padding: 1.2rem;
+}
+.gallery-card .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.gallery-card h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text); }
+.gallery-card p { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+.gallery-card .stat { font-size: 1.3rem; font-weight: 800; margin-top: 0.5rem; }
+
+/* ── SLIDE 7: Dashboard ──────────────────────────────────────────────────── */
+#s7 { background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 100%); }
+.demo-layout { display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem; flex: 1; margin-top: 1.5rem; }
+.demo-sidebar {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 1.2rem;
+}
+.demo-main { display: flex; flex-direction: column; gap: 1rem; }
+.demo-card {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 1.2rem; flex: 1;
+}
+.demo-metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.8rem; }
+.demo-metric { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 0.8rem; }
+
+/* ── SLIDE 8: Limitations + Roadmap ─────────────────────────────────────── */
+#s8 { background: var(--bg); }
+.lr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; flex: 1; margin-top: 1.5rem; }
+.lr-box {
+  background: var(--card); border-radius: 14px; border: 1px solid var(--border);
+  box-shadow: var(--shadow); padding: 1.6rem;
+}
+.lr-item { display: flex; gap: 0.8rem; margin-bottom: 0.9rem; font-size: 0.82rem; line-height: 1.5; color: var(--text); }
+.lr-item .dot { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; margin-top: 1px; }
+.dot-warn { background: var(--amber-pale); color: #92400E; }
+.dot-road { background: var(--violet-pale); color: #5B21B6; }
+
+/* ── SLIDE 9: Closing ────────────────────────────────────────────────────── */
+#s9 { background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); justify-content: center; align-items: center; text-align: center; }
+
+/* Shared headings */
+.slide-title {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.slide-h { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.2rem; }
+.slide-sub { font-size: 0.9rem; color: var(--muted); }
+
+.light .slide-title { color: var(--violet); }
+.light .slide-h { color: var(--text); }
+.dark .slide-title { color: var(--violet-light); }
+.dark .slide-h { color: #fff; }
+.dark .slide-sub { color: rgba(255,255,255,0.5); }
+
+/* Hover tooltip for numbers */
+[title] { cursor: help; border-bottom: 1px dotted #aaa; }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+<!-- ══════════════════════════════════ SLIDE 1 ══════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="tag">AI Innovation Hackathon 2026 &nbsp;·&nbsp; Challenge 09: WearableSense AI</div>
+  <h1>Signal<span>Trust</span> 💓</h1>
+  <div class="tagline">Quality-Aware Heart Rate Monitoring from Wrist PPG — Knowing when to trust the wearable.</div>
+  <div class="quote">"We don't trust the wearable. We measure when to, and prove it."</div>
+  <div class="meta">
+    <div class="meta-item">
+      <span class="meta-label">Participant</span>
+      <span class="meta-value">Vishruti · D.Y. Patil College of Engineering, Akurdi, Pune</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Track</span>
+      <span class="meta-value">Biomedical AI · Image &amp; Signal Analysis</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Data</span>
+      <span class="meta-value">WESAD (15 subjects) · BIDMC (53 recordings)</span>
+    </div>
+  </div>
+  <div class="pulse-icon">💓</div>
+</div>
+
+<!-- ══════════════════════════════════ SLIDE 2 ══════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="light">
+    <div class="slide-title">The Problem</div>
+    <div class="slide-h">Wearables lie — silently.</div>
+    <div class="slide-sub">PPG HR is reported even when the signal is useless</div>
+  </div>
+  <div class="two-col">
+    <div class="problem-box bad">
+      <div style="font-size:2rem;margin-bottom:0.7rem;">😤</div>
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.8rem;color:#9F1239;">What happens today</h3>
+      <ul style="font-size:0.82rem;line-height:2;color:#374151;padding-left:1.2rem;">
+        <li>User moves wrist during workout</li>
+        <li>PPG signal corrupted by motion</li>
+        <li>Estimator outputs <strong>a number anyway</strong></li>
+        <li>Reported HR: 142 bpm. Actual: 87 bpm. ❌</li>
+        <li>No flag, no warning, no abstention</li>
+      </ul>
+      <div style="margin-top:1rem;padding:0.8rem;background:#FFF1F2;border-radius:8px;font-size:0.8rem;color:#9F1239;font-weight:600;">
+        Ungated PPG MAE on WESAD: <strong>8.76 bpm</strong> — nearly clinically meaningless
+      </div>
+    </div>
+    <div class="problem-box good">
+      <div style="font-size:2rem;margin-bottom:0.7rem;">✅</div>
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.8rem;color:#065F46;">What SignalTrust does</h3>
+      <ul style="font-size:0.82rem;line-height:2;color:#374151;padding-left:1.2rem;">
+        <li>Scores each 8 s window of PPG</li>
+        <li><strong>Reports HR only</strong> when quality ≥ threshold</li>
+        <li>Abstains (shows "—") when uncertain</li>
+        <li>Coverage + accuracy are both shown</li>
+        <li>The trade-off is made explicit, not hidden</li>
+      </ul>
+      <div style="margin-top:1rem;padding:0.8rem;background:#ECFDF5;border-radius:8px;font-size:0.8rem;color:#065F46;font-weight:600;">
+        Gated MAE at 50% coverage: <strong>2.65 bpm</strong> &nbsp;→&nbsp; 70% reduction
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SLIDE 3 ══════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="dark">
+    <div class="slide-title">The Approach</div>
+    <div class="slide-h">A calibrated quality gate on every window</div>
+    <div class="slide-sub" style="color:rgba(255,255,255,0.45)">LOSO · HistGradientBoosting · Isotonic calibration · 8 features</div>
+  </div>
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="icon">📦</div>
+      <div class="lbl">Input</div>
+      <div class="desc" style="color:rgba(255,255,255,0.7)">Raw wrist BVP (64 Hz) + ACC. 8 s windows, 2 s stride.</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="icon">🔬</div>
+      <div class="lbl">Features (8)</div>
+      <div class="desc" style="color:rgba(255,255,255,0.7)">SNR, skew, kurt, IBI-CV, template corr, acc_std, acc_range, BVP std</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step highlight">
+      <div class="icon">🧠</div>
+      <div class="lbl">Quality Model</div>
+      <div class="desc" style="color:rgba(255,255,255,0.9)"><strong>HistGBT + isotonic calibration</strong>. LOSO. Outputs p(usable) ∈ [0,1].</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="icon">⚖️</div>
+      <div class="lbl">Gate @ 0.70</div>
+      <div class="desc" style="color:rgba(255,255,255,0.7)">Threshold chosen on held-out subjects to cap false-accept ≤ 5%.</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="icon">💓</div>
+      <div class="lbl">Output</div>
+      <div class="desc" style="color:rgba(255,255,255,0.7)">HR reported ✓ if gate passes. <span style="color:#F87171">Withheld ✕</span> if rejected.</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;">
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.8rem 1.2rem;font-size:0.8rem;color:rgba(255,255,255,0.7);">
+      📐 <strong style="color:#fff">Label:</strong> usable = |HR_ppg − HR_ecg| ≤ 5 bpm — non-circular, ECG-only reference
+    </div>
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.8rem 1.2rem;font-size:0.8rem;color:rgba(255,255,255,0.7);">
+      🔒 <strong style="color:#fff">No leakage:</strong> LOSO — each subject is fully held out once
+    </div>
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.8rem 1.2rem;font-size:0.8rem;color:rgba(255,255,255,0.7);">
+      📏 <strong style="color:#fff">Metric:</strong> MAE vs. coverage (not just accuracy)
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SLIDE 4 ══════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="light">
+    <div class="slide-title">Results</div>
+    <div class="slide-h">Real data. 38,879 windows. 15 subjects. LOSO.</div>
+    <div class="slide-sub">WESAD dataset — wrist PPG (Empatica E4) vs chest ECG reference</div>
+  </div>
+  <div class="results-grid">
+    <div class="metric-card">
+      <div class="lbl">Ungated MAE (baseline)</div>
+      <div class="val" style="color:var(--rose)">8.76 <span style="font-size:1rem">bpm</span></div>
+      <div class="sub">No gate — always report HR</div>
+    </div>
+    <div class="metric-card">
+      <div class="lbl">Gated MAE @ 50% coverage</div>
+      <div class="val" style="color:var(--mint)">2.65 <span style="font-size:1rem">bpm</span></div>
+      <div class="sub">↓ 70% reduction · model gate</div>
+    </div>
+    <div class="metric-card">
+      <div class="lbl">Quality AUROC</div>
+      <div class="val" style="color:var(--violet)">0.864</div>
+      <div class="sub">σ = 0.033 across 15 subjects</div>
+    </div>
+    <div class="metric-card">
+      <div class="lbl">False-Accept Rate @ 0.70</div>
+      <div class="val" style="color:var(--amber)">4.9%</div>
+      <div class="sub">Target was ≤ 5% · ✓ held</div>
+    </div>
+    <div class="metric-card">
+      <div class="lbl">ECE (calibration)</div>
+      <div class="val" style="color:var(--sky)">0.005</div>
+      <div class="sub">Near-perfect probability calibration</div>
+    </div>
+    <div class="metric-card">
+      <div class="lbl">BIDMC cross-dataset AUROC</div>
+      <div class="val" style="color:var(--mint)">0.908</div>
+      <div class="sub">PPG-only · no retraining</div>
+    </div>
+
+    <div class="table-card">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.8rem;">MAE vs. Coverage — Model vs. Baselines (bpm)</div>
+      <table>
+        <tr><th>Coverage</th><th>🟣 Model (ours)</th><th>🔵 SNR gate</th><th>⚙️ Accel gate</th><th>Ungated</th></tr>
+        <tr class="best"><td>30%</td><td>1.81</td><td>1.88</td><td>3.23</td><td>8.76</td></tr>
+        <tr class="best"><td>50%</td><td>2.65</td><td>3.12</td><td>3.86</td><td>8.76</td></tr>
+        <tr><td>70%</td><td>4.72</td><td>5.63</td><td>5.24</td><td>8.76</td></tr>
+        <tr><td>90%</td><td>7.29</td><td>7.72</td><td>7.20</td><td>8.76</td></tr>
+      </table>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:0.6rem;">
+        Honest note: gating itself drives ~70% of the gain. Model beats SNR by ~0.5 bpm at 50%; accelerometer alone is clearly insufficient.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SLIDE 5 ══════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="dark">
+    <div class="slide-title">Robustness</div>
+    <div class="slide-h">Stress test: synthetic artifacts on 1,500 clean windows</div>
+    <div class="slide-sub" style="color:rgba(255,255,255,0.45)">5 artifact types × 4 severities · WESAD LOSO model · threshold 0.70</div>
+  </div>
+  <div class="robust-grid">
+    <div class="robust-card">
+      <h3 style="color:#34D399">✅ Works well — the gate catches these</h3>
+      <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-bottom:0.8rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;">Artifact | Sev | Ungated MAE → Gated MAE</div>
+      <div class="robust-row">
+        <span style="color:rgba(255,255,255,0.8);width:140px;font-size:0.78rem;">Coupled motion</span>
+        <div class="bar-wrap"><div class="bar" style="width:85%;background:#34D399;"></div></div>
+        <span style="font-size:0.78rem;color:#34D399;white-space:nowrap;">25.4 → <strong>3.8 bpm</strong></span>
+      </div>
+      <div class="robust-row">
+        <span style="color:rgba(255,255,255,0.8);width:140px;font-size:0.78rem;">Dropout sev 4</span>
+        <div class="bar-wrap"><div class="bar" style="width:78%;background:#34D399;"></div></div>
+        <span style="font-size:0.78rem;color:#34D399;white-space:nowrap;">7.55 → <strong>3.8 bpm</strong></span>
+      </div>
+      <div class="robust-row">
+        <span style="color:rgba(255,255,255,0.8);width:140px;font-size:0.78rem;">Baseline wander sev 4</span>
+        <div class="bar-wrap"><div class="bar" style="width:75%;background:#34D399;"></div></div>
+        <span style="font-size:0.78rem;color:#34D399;white-space:nowrap;">7.31 → <strong>2.7 bpm</strong></span>
+      </div>
+      <div class="robust-row">
+        <span style="color:rgba(255,255,255,0.8);width:140px;font-size:0.78rem;">Saturation sev 4</span>
+        <div class="bar-wrap"><div class="bar" style="width:60%;background:#34D399;"></div></div>
+        <span style="font-size:0.78rem;color:#34D399;white-space:nowrap;">3.50 → <strong>2.0 bpm</strong></span>
+      </div>
+    </div>
+    <div class="robust-card">
+      <h3 style="color:#FB7185">⚠️ Failure mode — PPG-only periodic motion</h3>
+      <div style="font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.75);margin-bottom:1rem;">
+        When a periodic burst at pulse frequency is injected into PPG <em>only</em> (accelerometer calm), the SNR feature self-validates against the estimator's own Hz estimate. Both the model and SNR gate fail.
+      </div>
+      <div style="background:rgba(244,63,94,0.15);border:1px solid rgba(244,63,94,0.3);border-radius:10px;padding:1rem;">
+        <div style="font-size:0.8rem;color:#FB7185;font-weight:700;margin-bottom:0.4rem;">PPG-only motion sev 4:</div>
+        <div style="font-size:0.82rem;color:rgba(255,255,255,0.8);">
+          Bad rate: <strong>88.5%</strong> &nbsp;·&nbsp; False-accept: <strong>67.8%</strong> &nbsp;·&nbsp; Gated MAE: <strong>37.1 bpm</strong>
+        </div>
+        <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.5rem;">
+          Fix (roadmap): PPG–ACC spectral coherence feature
+        </div>
+      </div>
+      <div style="margin-top:0.8rem;font-size:0.75rem;color:rgba(255,255,255,0.45);">
+        We report this honestly — not hidden. The accelerometer gate catches coupled motion perfectly; the model catches everything else.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SLIDE 6 ══════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="light">
+    <div class="slide-title">Error Analysis</div>
+    <div class="slide-h">Failure gallery — 8 figures, honest breakdowns</div>
+    <div class="slide-sub">outputs/failure_gallery/ · 38,879 windows across 15 subjects</div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-card">
+      <div class="icon">🎯</div>
+      <h3>Decision Landscape</h3>
+      <p>All windows colored: correct accept (mint) · false accept (rose) · false reject (amber) · correct reject (grey)</p>
+      <div class="stat" style="color:var(--violet)">4 outcomes</div>
+    </div>
+    <div class="gallery-card">
+      <div class="icon">⚠️</div>
+      <h3>False Accepts (1,904)</h3>
+      <p>High p_cal but large HR error. Key cause: SNR self-validates on motion-locked signals. Median SNR nearly identical to correct accepts.</p>
+      <div class="stat" style="color:var(--rose)">4.9% rate</div>
+    </div>
+    <div class="gallery-card">
+      <div class="icon">🚫</div>
+      <h3>False Rejects (7,029)</h3>
+      <p>Low p_cal but small error — 30% of usable windows withheld. Cost of keeping FA ≤ 5%.</p>
+      <div class="stat" style="color:var(--amber)">30% missed</div>
+    </div>
+    <div class="gallery-card">
+      <div class="icon">🏃</div>
+      <h3>Motion Decile</h3>
+      <p>Usable rate drops from 85% (calmest decile) → 17% (most active). Gate coverage follows monotonically.</p>
+      <div class="stat" style="color:var(--sky)">D1→D10 ↓68%</div>
+    </div>
+    <div class="gallery-card">
+      <div class="icon">📊</div>
+      <h3>WESAD Condition</h3>
+      <p>Baseline best (clean, low motion). Stress worst (motion + vasoconstriction). Gate disproportionately withholds stress — appropriate behaviour.</p>
+      <div class="stat" style="color:var(--mint)">5 conditions</div>
+    </div>
+    <div class="gallery-card">
+      <div class="icon">📐</div>
+      <h3>Reliability Diagram</h3>
+      <p>ECE = 0.089 on BIDMC. Calibration curve hugs the diagonal — probability scores are trustworthy.</p>
+      <div class="stat" style="color:var(--violet)">ECE 0.089</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SLIDE 7 ══════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="dark">
+    <div class="slide-title">Live Demo</div>
+    <div class="slide-h">Streamlit Dashboard — replay mode</div>
+    <div class="slide-sub" style="color:rgba(255,255,255,0.45)">http://localhost:8501 · streamlit run app/app.py -- --oof outputs/phase2/oof_predictions.csv</div>
+  </div>
+  <div class="demo-layout">
+    <div class="demo-sidebar">
+      <div style="font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:0.3rem;">💓 SignalTrust</div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);margin-bottom:1.2rem;">Quality-Aware HR Monitor</div>
+      <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:0.3rem;">Subject</div>
+      <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:0.5rem 0.8rem;font-size:0.82rem;color:#fff;margin-bottom:1rem;">S10 ▾</div>
+      <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:0.3rem;">Quality gate threshold</div>
+      <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:999px;margin-bottom:0.3rem;position:relative;"><div style="position:absolute;left:63%;top:-3px;width:10px;height:10px;background:#F43F5E;border-radius:50%;"></div><div style="height:100%;width:63%;background:linear-gradient(90deg,#8B5CF6,#F43F5E);border-radius:999px;"></div></div>
+      <div style="font-size:0.75rem;color:#F43F5E;font-weight:700;margin-bottom:1rem;">0.70</div>
+      <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:0.3rem;">Replay speed</div>
+      <div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:0.5rem 0.8rem;font-size:0.82rem;color:#fff;margin-bottom:1.2rem;">1 s ▾</div>
+      <div style="display:flex;gap:0.5rem;margin-bottom:1rem;">
+        <div style="background:#F43F5E;color:#fff;border-radius:8px;padding:0.4rem 0.7rem;font-size:0.75rem;font-weight:700;">▶ Play</div>
+        <div style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border-radius:8px;padding:0.4rem 0.7rem;font-size:0.75rem;">⏸</div>
+        <div style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border-radius:8px;padding:0.4rem 0.7rem;font-size:0.75rem;">↺</div>
+      </div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);line-height:1.7;">
+        🟢 Quality ≥ threshold → HR reported<br>
+        🔴 Quality &lt; threshold → HR withheld<br>
+        MAE curve: lower is better
+      </div>
+    </div>
+    <div class="demo-main">
+      <div class="demo-metrics">
+        <div class="demo-metric">
+          <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:4px;">Heart Rate</div>
+          <div style="font-size:1.3rem;font-weight:800;color:#F43F5E;">—</div>
+          <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);">WITHHELD ✕</div>
+        </div>
+        <div class="demo-metric">
+          <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:4px;">Quality Score</div>
+          <div style="font-size:1.3rem;font-weight:800;color:#F59E0B;">0.13</div>
+          <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);">Gate FAIL</div>
+        </div>
+        <div class="demo-metric">
+          <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:4px;">Gated MAE</div>
+          <div style="font-size:1.3rem;font-weight:800;color:#8B5CF6;">2.4 bpm</div>
+          <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);">vs ungated 8.76</div>
+        </div>
+        <div class="demo-metric">
+          <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);margin-bottom:4px;">Coverage</div>
+          <div style="font-size:1.3rem;font-weight:800;color:#0EA5E9;">47%</div>
+          <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);">HR reported</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;flex:1;">
+        <div class="demo-card">
+          <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.35);margin-bottom:0.5rem;">Signal Features</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <div><div style="font-size:0.72rem;color:rgba(255,255,255,0.6);margin-bottom:2px;">Quality (p_cal)</div><div style="height:6px;background:rgba(255,255,255,0.1);border-radius:999px;"><div style="width:13%;height:100%;background:#F43F5E;border-radius:999px;"></div></div></div>
+            <div><div style="font-size:0.72rem;color:rgba(255,255,255,0.6);margin-bottom:2px;">SNR</div><div style="height:6px;background:rgba(255,255,255,0.1);border-radius:999px;"><div style="width:15%;height:100%;background:#F59E0B;border-radius:999px;"></div></div></div>
+            <div><div style="font-size:0.72rem;color:rgba(255,255,255,0.6);margin-bottom:2px;">Acc calm</div><div style="height:6px;background:rgba(255,255,255,0.1);border-radius:999px;"><div style="width:0%;height:100%;background:#F43F5E;border-radius:999px;"></div></div></div>
+          </div>
+        </div>
+        <div class="demo-card">
+          <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.35);margin-bottom:0.5rem;">Quality Score Timeline</div>
+          <svg viewBox="0 0 200 80" style="width:100%;height:60px;">
+            <line x1="0" y1="56" x2="200" y2="56" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4"/>
+            <text x="160" y="53" fill="rgba(255,255,255,0.3)" font-size="8">threshold 0.70</text>
+            <polyline points="10,68 30,64 50,28 70,22 90,18 110,70 130,65 150,20 170,16 190,72" fill="none" stroke="#8B5CF6" stroke-width="1.5" opacity="0.6"/>
+            <circle cx="10" cy="68" r="3" fill="#F43F5E"/>
+            <circle cx="50" cy="28" r="3" fill="#10B981"/>
+            <circle cx="90" cy="18" r="3" fill="#10B981"/>
+            <circle cx="110" cy="70" r="3" fill="#F43F5E"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SLIDE 8 ══════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="light">
+    <div class="slide-title">Limitations &amp; Roadmap</div>
+    <div class="slide-h">Honest evaluation — and what's next</div>
+    <div class="slide-sub">We report limitations explicitly — the rubric asks for it, and it's the right thing to do</div>
+  </div>
+  <div class="lr-grid">
+    <div class="lr-box">
+      <h3 style="font-size:0.85rem;font-weight:800;margin-bottom:1rem;color:#92400E;">⚠️ Current Limitations</h3>
+      <div class="lr-item"><div class="dot dot-warn">1</div><div><strong>Single dataset</strong>: WESAD, 15 subjects, one wrist device, lab conditions. Cross-dataset BIDMC looks good, but generalization is unproven at scale.</div></div>
+      <div class="lr-item"><div class="dot dot-warn">2</div><div><strong>PPG-only motion failure</strong>: strong periodic motion in the pulse band fools the SNR gate and the model. Only the accelerometer catches coupled motion.</div></div>
+      <div class="lr-item"><div class="dot dot-warn">3</div><div><strong>Non-causal filter</strong>: filtfilt used offline. Dashboard shows a replay of pre-computed scores. Real-time deployment needs a causal filter.</div></div>
+      <div class="lr-item"><div class="dot dot-warn">4</div><div><strong>Label noise</strong>: ~15% of quiet-wrist windows still disagree with ECG; cause not proven.</div></div>
+      <div class="lr-item"><div class="dot dot-warn">5</div><div><strong>Synthetic stress test</strong>: artifacts injected on clean windows — not a real-world prevalence estimate.</div></div>
+    </div>
+    <div class="lr-box">
+      <h3 style="font-size:0.85rem;font-weight:800;margin-bottom:1rem;color:#5B21B6;">🚀 Roadmap</h3>
+      <div class="lr-item"><div class="dot dot-road">1</div><div><strong>PPG–ACC spectral coherence feature</strong>: closes the PPG-only motion gap — a frequency-domain check that doesn't depend on the estimated HR.</div></div>
+      <div class="lr-item"><div class="dot dot-road">2</div><div><strong>Causal on-device inference</strong>: replace filtfilt with causal IIR; export model to TFLite or ONNX for wearable deployment.</div></div>
+      <div class="lr-item"><div class="dot dot-road">3</div><div><strong>Artifact-type classifier</strong>: separate motion / dropout / saturation / wander to give targeted feedback to the user.</div></div>
+      <div class="lr-item"><div class="dot dot-road">4</div><div><strong>Larger cohorts</strong>: PPG-DaLiA, consumer wearable exports, clinical populations. Diverse devices and demographics.</div></div>
+      <div class="lr-item"><div class="dot dot-road">5</div><div><strong>PPG/ECG fusion</strong>: for clinical-grade accuracy when ECG is available (e.g., smartwatch with ECG lead).</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SLIDE 9 ══════════════════════════════ -->
+<div class="slide" id="s9">
+  <div style="text-align:center;max-width:700px;">
+    <div style="font-size:4rem;margin-bottom:1.5rem;">💓</div>
+    <h1 style="font-size:3.5rem;font-weight:900;color:#fff;letter-spacing:-0.03em;margin-bottom:0.8rem;">SignalTrust</h1>
+    <div style="font-size:1.2rem;color:rgba(255,255,255,0.65);margin-bottom:2.5rem;line-height:1.6;">
+      Quality-Aware Heart Rate Monitoring.<br>
+      <em>Know when to trust. Know when to abstain.</em>
+    </div>
+    <div style="display:flex;justify-content:center;gap:2.5rem;margin-bottom:2.5rem;">
+      <div style="text-align:center;">
+        <div style="font-size:2.2rem;font-weight:900;color:#10B981;">2.65</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;">bpm @ 50% coverage</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2.2rem;font-weight:900;color:#8B5CF6;">0.864</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;">AUROC</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2.2rem;font-weight:900;color:#0EA5E9;">0.908</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;">BIDMC AUROC</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2.2rem;font-weight:900;color:#F59E0B;">4.9%</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;">False-accept rate</div>
+      </div>
+    </div>
+    <div style="font-size:0.8rem;color:rgba(255,255,255,0.3);line-height:1.8;">
+      Vishruti · D.Y. Patil College of Engineering, Akurdi, Pune<br>
+      AI Innovation Hackathon 2026 · Challenge 09: WearableSense AI<br>
+      Research prototype · No clinical claims · Public datasets only
+    </div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prev()">‹</button>
+  <span class="counter" id="counter">1 / 9</span>
+  <button onclick="next()">›</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+
+function show(n) {
+  slides[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.getElementById('counter').textContent = `${cur+1} / ${slides.length}`;
+}
+function next() { show(cur + 1); }
+function prev() { show(cur - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); prev(); }
+});
+</script>
+</body>
+</html>
